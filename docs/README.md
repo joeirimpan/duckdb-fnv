@@ -36,14 +36,14 @@ The main binaries that will be built are:
 ## Running the extension
 To run the extension code, simply start the shell with `./build/release/duckdb`. This shell will have the extension pre-loaded.  
 
-Now we can use the features from the extension directly in DuckDB. The template contains a single scalar function `quack()` that takes a string arguments and returns a string:
+Now we can use the features from the extension directly in DuckDB. The template contains a scalar function `fnv()` that takes a string arguments, max partitions and returns a int:
 ```
-D select quack('Jane') as result;
+D select fnv('joeirimpan', 32) as partition;
 ┌───────────────┐
-│    result     │
-│    varchar    │
+│    partition  │
+│    int        │
 ├───────────────┤
-│ Quack Jane 🐥 │
+│ 23            │
 └───────────────┘
 ```
 
