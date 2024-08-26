@@ -1,3 +1,5 @@
+<a href="https://zerodha.tech"><img src="https://zerodha.tech/static/images/github-badge.svg" align="right" /></a>
+
 # DuckDB fnv partitioner extension
 
 Implements duckdb user defined functions for FNV hash and partitioning. It exposes two functions:
