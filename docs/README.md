@@ -7,7 +7,32 @@ Implements duckdb user defined functions for FNV hash and partitioning. It expos
 - fnv() - Takes a string and returns the FNV hash of the string.
 - fnv_partition() - Takes a string and max partitions and returns the partition number.
 
-## Build steps
+
+## Usage
+
+```
+$ wget https://github.com/joeirimpan/duckdb-fnv/releases/download/v0.0.1/fnv.duckdb_extension -O /path/to/file/fnv.duckdb_extension
+$ duckdb -unsigned
+v1.0.0 1f98600c2c
+Enter ".help" for usage hints.
+D LOAD '/path/to/file/fnv.duckdb_extension';
+D select fnv('joeirimpan');
+┌───────────────────┐
+│ fnv('joeirimpan') │
+│       int32       │
+├───────────────────┤
+│        1875971319 │
+└───────────────────┘
+D select fnv_partition('joeirimpan', 420);
+┌──────────────────────────────────┐
+│ fnv_partition('joeirimpan', 420) │
+│              int32               │
+├──────────────────────────────────┤
+│                              159 │
+└──────────────────────────────────
+```
+
+## Development
 
 To build the extension, follow these steps:
 
