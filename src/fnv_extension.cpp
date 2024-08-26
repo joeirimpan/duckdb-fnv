@@ -33,6 +33,16 @@ namespace duckdb {
 inline void FnvScalarFun(DataChunk &args, ExpressionState &state,
                          Vector &result) {
   auto &name_vector = args.data[0];
+  UnaryExecutor::Execute<string_t, int32_t>(
+      name_vector, result, args.size(),
+      [&](string_t name) {
+        return fnvHash(name.GetString());
+      });
+}
+
+inline void FnvPartitionScalarFun(DataChunk &args, ExpressionState &state,
+                         Vector &result) {
+  auto &name_vector = args.data[0];
   auto &parts_vector = args.data[1];
   BinaryExecutor::Execute<string_t, int32_t, int32_t>(
       name_vector, parts_vector, result, args.size(),
@@ -44,9 +54,13 @@ inline void FnvScalarFun(DataChunk &args, ExpressionState &state,
 static void LoadInternal(DatabaseInstance &instance) {
   // Register a scalar function
   auto fnv_scalar_function =
-      ScalarFunction("fnv", {LogicalType::VARCHAR, LogicalType::INTEGER},
+      ScalarFunction("fnv", {LogicalType::VARCHAR},
                      LogicalType::INTEGER, FnvScalarFun);
+  auto fnv_partition_scalar_function =
+      ScalarFunction("fnv_partition", {LogicalType::VARCHAR, LogicalType::INTEGER},
+                     LogicalType::INTEGER, FnvPartitionScalarFun);
   ExtensionUtil::RegisterFunction(instance, fnv_scalar_function);
+  ExtensionUtil::RegisterFunction(instance, fnv_partition_scalar_function);
 }
 
 void FnvExtension::Load(DuckDB &db) { LoadInternal(*db.instance); }
