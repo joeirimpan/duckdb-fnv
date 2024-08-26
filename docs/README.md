@@ -17,6 +17,13 @@ The main binaries that will be built are:
 - `./build/release/test/unittest`: The test runner of duckdb. The extension is already linked into the binary.
 - `./build/release/extension/fnv/fnv.duckdb_extension`: The loadable binary as it would be distributed.
 
+### Building for `linux_amd64_gcc4` platform
+
+To build the extension for `linux_amd64_gcc4`, follow these steps:
+
+1. `docker build -t duckdb_fnv .`
+2. `docker run --rm duckdb_fnv cat /build/release/extension/fnv/fnv.duckdb_extension > fnv.duckdb_extension`
+
 ## Running the extension
 
 To run the extension code, follow these steps:
